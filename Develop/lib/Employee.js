@@ -3,10 +3,16 @@ class Employee {
 
 
     constructor(name, id, email){
-        // this. ...(more code here)
+        this.getName = () => {
+
+        }
+        this.name = name;
+        this.id = id;
+        this.email = email;
     }
 
     // getters and setters
 }
 
 module.exports= Employee;
+//const employee = require("./lib/Employee");

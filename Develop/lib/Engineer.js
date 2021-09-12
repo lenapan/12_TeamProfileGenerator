@@ -7,4 +7,4 @@ class Engineer extends Employer {
 
     //getters and setters 
 }
-//export
+module.exports= Engineer;

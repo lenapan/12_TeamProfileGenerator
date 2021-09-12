@@ -1,44 +1,80 @@
-const Manager = require("./lib/Manager");
-const Engineer = require("./lib/Engineer"); //internal mod
-const Intern = require("./lib/Intern"); //internal mod
+//const manager = require("./lib/Manager");   
+//const Engineer = require("./lib/Engineer"); 
+//const Intern = require("./lib/Intern"); 
+
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
 
-const OUTPUT_DIR = path.resolve(__dirname, "output");
+const OUTPUT_DIR = path.resolve(__dirname, "dist");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-const teamMembers = [];
-const questions = [
+const init = [
     {   
-        type:   "",
-        name: "",
-        message: "What is the team manager's name?"
+        type: "list",
+        name: "employee",
+        message: "Add Employee:",
+        choices: ['Manager','Engineer','Intern']
     },
     {   
-        type:   "",
-        name: "",
-        message: "What is the team manager's id?"
+        type: "input",
+        name: "name",
+        message: "Enter Name:"
     },
     {   
-        type:   "",
-        name: "",
-        message: "What is the team manager's email?"
+        type: "input",
+        name: "id",
+        message: "Enter ID:"
     },
     {   
-        type:   "",
-        name: "",
-        message: "What is the team manager's office number?"
+        type: "input",
+        name: "email",
+        message: "Enter Email:"
+    },       
+    {   
+        when: (a) => a.employee === 'Manager',
+        type: "input",
+        name: "number",
+        message: "Office Number:"
+    }, 
+    {   
+        when: (a) => a.employee === 'Intern',
+        type: "input",
+        name: "school",
+        message: "School Name:"
+    }, 
+    {   
+        when: (a) => a.employee === 'Engineer',
+        type: "input",
+        name: "github",
+        message: "Github Username:"
     },
     {   
-        type:   "list",
-        name: "",
-        message: "Which type of team member would you like to add?",
-        choices: ['Engineer','Intern',"I don't want to add any more team members"]
+        type: "list",
+        name: "add",
+        message: "Any more team members to acknowledge?",
+        choices: ['Yes',"No; Let's render the page!"]
     }
 ]
+var team = [];
+function startApp(){
+    inquirer.prompt(init)
+    .then(response => {
+        team.push(response);
+        console.log("\n"+ "Let's welcome "+response.name+ "\n");
+        if (response.add === 'Yes'){
+            startApp();
+        }
+        else{
+            console.log("An HTML page is being generated...");
+            //buildTeam();
+        }
+    })
+}
+startApp();
+
 //function start(){}
 
 //function createManager(){ inquirer.prompt ([]) }
@@ -57,5 +93,5 @@ function buildTeam(){
     if (!fs.existsSync(OUTPUT_DIR)){
         fs.mkdirSync(OUTPUT_DIR)
     }
-    fs.writeFileSync(OUTPUT_DIR, render(teamMembers), "utf-8")
+    fs.writeFileSync(OUTPUT_DIR, render(team), "utf-8")
 }
