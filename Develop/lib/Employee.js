@@ -7,7 +7,7 @@ class Employee {
         this.email = email;
     }
     //see htmlRenderer.js for function hints
-    getRole() {return "Employee"}//only needed to pass npm run test; app can function without
+    getRole() {return "Employee"}//only added to pass npm run test; app can function without
     getName() {return this.name};
     getId() {return this.id};
     getEmail() {return this.email};

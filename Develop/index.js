@@ -10,7 +10,6 @@ const fs = require("fs");
 const OUTPUT_DIR = path.resolve(__dirname, "dist");
 const output = path.join(OUTPUT_DIR, "team.html");
 
-
 const init = [
     {   
         type: "list",
@@ -36,7 +35,7 @@ const init = [
     {   
         when: (a) => a.team=== 'Manager',
         type: "input",
-        name: "officeNumber",
+        name: "number",
         message: "Office Number:"
     }, 
     {   
@@ -63,17 +62,19 @@ function startApp(){
     inquirer.prompt(init)
     .then(response => { 
         if (response.team === 'Manager'){
-            const m = new Manager (response.name, response.id, response.email, response.officeNumber);
-            teamArr.push(m);    console.log(teamArr)
-            //createTeam();
+            const m = new Manager (response.name, response.id, response.email, response.number);
+            teamArr.push(m);    //console.log(teamArr); 
+            console.log("\n"+ "A new " + m.getRole() + " has been added" + "\n");
         }
         else if(response.team === 'Engineer'){
             const e = new Engineer (response.name, response.id, response.email, response.github);
-            teamArr.push(e);    console.log(teamArr)
+            teamArr.push(e);    //console.log(teamArr)
+            console.log("\n"+ "A new " + e.getRole() + " has been added" + "\n");
         }
         else if(response.team === 'Intern'){
             const i = new Intern (response.name, response.id, response.email, response.school);
-            teamArr.push(i);    console.log(teamArr)
+            teamArr.push(i);    //console.log(teamArr)
+            console.log("\n"+ "A new " + i.getRole() + " has been added" + "\n");
         }              
         if (response.add === 'Yes'){ 
             startApp();

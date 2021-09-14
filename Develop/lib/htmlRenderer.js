@@ -5,10 +5,10 @@ const templatesDir = path.resolve(__dirname, "../templates");
 
 const render = employees => {
   const html = [];
-
+  //filter() and map() can only be used on an array
   html.push(...employees
-    .filter(employee => employee.getRole() === "Manager")
-    .map(manager => renderManager(manager))
+    .filter(employee => employee.getRole() === "Manager") //If "Manager" is found in the array,
+    .map(manager => renderManager(manager)) //create a new array with values derived from line 25-33
   );
   html.push(...employees
     .filter(employee => employee.getRole() === "Engineer")
@@ -19,17 +19,16 @@ const render = employees => {
     .map(intern => renderIntern(intern))
   );
 
-  return renderMain(html.join(""));
-
+  return renderMain(html.join(""));//line 55 reference
 };
-
+//line 60 for replacePlaceholders reference
 const renderManager = manager => {
   let template = fs.readFileSync(path.resolve(templatesDir, "manager.html"), "utf8");
-  template = replacePlaceholders(template, "name", manager.getName());
-  template = replacePlaceholders(template, "role", manager.getRole());
-  template = replacePlaceholders(template, "email", manager.getEmail());
-  template = replacePlaceholders(template, "id", manager.getId());
-  template = replacePlaceholders(template, "officeNumber", manager.getOfficeNumber());
+  template = replacePlaceholders(template, "name", manager.getName()); //<h2 class="card-title"> {{ name }} </h2>
+  template = replacePlaceholders(template, "role", manager.getRole()); //{{ role }}
+  template = replacePlaceholders(template, "email", manager.getEmail());  //{{ email }}
+  template = replacePlaceholders(template, "id", manager.getId()); //{{ id }}
+  template = replacePlaceholders(template, "officeNumber", manager.getOfficeNumber()); //{{ officeNumber }}
   return template;
 };
 
@@ -55,11 +54,12 @@ const renderIntern = intern => {
 
 const renderMain = html => {
   const template = fs.readFileSync(path.resolve(templatesDir, "main.html"), "utf8");
-  return replacePlaceholders(template, "team", html);
+  return replacePlaceholders(template, "team", html); //{{ team }}
 };
 
 const replacePlaceholders = (template, placeholder, value) => {
-  const pattern = new RegExp("{{ " + placeholder + " }}", "gm");
+  const pattern = new RegExp("{{ " + placeholder + " }}", "gm"); //RegExp() constructor // g (global match); find ALL
+                        //creates a regular expression object for matching text with a pattern.
   return template.replace(pattern, value);
 };
 
