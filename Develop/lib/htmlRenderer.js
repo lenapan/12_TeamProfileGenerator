@@ -5,7 +5,7 @@ const templatesDir = path.resolve(__dirname, "../templates");
 
 const render = employees => {
   const html = [];
-  //filter() and map() can only be used on an array
+  //filter() and map() can only be used on an array //11.1.8 Review (Intro to Node)
   html.push(...employees
     .filter(employee => employee.getRole() === "Manager") //If "Manager" is found in the array,
     .map(manager => renderManager(manager)) //create a new array with values derived from line 25-33

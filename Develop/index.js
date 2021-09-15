@@ -64,23 +64,23 @@ function startApp(){
         if (response.team === 'Manager'){
             const m = new Manager (response.name, response.id, response.email, response.number);
             teamArr.push(m);    //console.log(teamArr); 
-            console.log("\n"+ "A new " + m.getRole() + " has been added" + "\n");
+            console.log(`\n A new ${m.getRole()} has been added \n`);
         }
         else if(response.team === 'Engineer'){
             const e = new Engineer (response.name, response.id, response.email, response.github);
             teamArr.push(e);    //console.log(teamArr)
-            console.log("\n"+ "A new " + e.getRole() + " has been added" + "\n");
+            console.log(`\n A new ${e.getRole()} has been added \n`);
         }
         else if(response.team === 'Intern'){
             const i = new Intern (response.name, response.id, response.email, response.school);
             teamArr.push(i);    //console.log(teamArr)
-            console.log("\n"+ "A new " + i.getRole() + " has been added" + "\n");
+            console.log(`\n A new ${i.getRole()} has been added \n`);
         }              
         if (response.add === 'Yes'){ 
             startApp();
         }
         else{
-            console.log("\n" +"An HTML page is being generated..."+ "\n" +"Here it is:");
+            console.log(`\n An HTML page is being generated... \n Here it is:`);
             buildTeam();
         }
     })
@@ -93,5 +93,5 @@ function buildTeam(){
         fs.mkdirSync(OUTPUT_DIR)
     }
     fs.writeFileSync(output, render(teamArr), "utf-8")
-    console.log(output +"\n");
+    console.log(`${output} \n`);
 }
